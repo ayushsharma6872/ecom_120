@@ -1,0 +1,127 @@
+﻿@model ecom_120.Models.ViewModels.ProductVM
+@{
+    var title = Model.Product.id != 0 ? "Edit Product" : "Add New";
+}
+
+<h2 class="text-primary border-bottom ">@title</h2>
+<div class="row">
+    <div class="col-8 ">
+        <form method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Product.Title"></label>
+                <input asp-for="Product.Title" class=" form-control" />
+                <span asp-validation-for="Product.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Product.Description"></label>
+                <textarea asp-for="Product.Description" class=" form-control" rows="3" ></textarea>
+                <span asp-validation-for="Product.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Product.Author"></label>
+                <input asp-for="Product.Author" class=" form-control" />
+                <span asp-validation-for="Product.Author" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Product.ISBN"></label>
+                <input asp-for="Product.ISBN" class=" form-control" />
+                <span asp-validation-for="Product.ISBN" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Product.ListPrice"></label>
+                <input asp-for="Product.ListPrice" class=" form-control" />
+                <span asp-validation-for="Product.ListPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Product.Price"></label>
+                <input asp-for="Product.Price" class=" form-control" />
+                <span asp-validation-for="Product.Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Product.Price50"></label>
+                <input asp-for="Product.Price50" class=" form-control" />
+                <span asp-validation-for="Product.Price50" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Product.Price100"></label>
+                <input asp-for="Product.Price100" class=" form-control" />
+                <span asp-validation-for="Product.Price100" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Product.ImageUrl"></label>
+                <input type="file" id="imageId" name="files" class=" form-control" />
+                @*  <span asp-validation-for="Product.ImageUrl" class="text-danger"></span> *@
+            </div>
+            <div class="form-group">
+                <label asp-for="Product.CategoryId"></label>
+                <select asp-for="Product.CategoryId" asp-items="@Model.CategoryList" class="form-control">
+                    <option value="">Select Category</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Product.CoverTypeId"></label>
+                <select asp-for="Product.CoverTypeId" asp-items="@Model.CoverTypeList" class="form-control">
+                    <option value="">Select CoverType</option>
+                </select>
+            </div>
+            <div class="form-group">
+                @if(Model.Product.id!=0)
+                {
+                    <partial name="_editPartialView"/>
+                }
+                else
+                {
+                    <div class="row">
+                        <div class="col">
+                            <button type="submit" onclick="return ValData()" class="btn btn-info w-100">
+                                Save
+                            </button>
+                        </div>
+                        <div class="col">
+                            <a asp-action="Index" class="btn btn-success w-100">
+                                Back To LIst
+                            </a>
+
+                        </div>
+
+                    </div>
+                }
+            </div>
+
+        </form>
+    </div>
+    <div class="col-4">
+        <p>Image Preview:</p>
+        @if(!string.IsNullOrEmpty(Model.Product.ImageUrl))
+        {
+            <img src="@Url.Content(Model.Product.ImageUrl)" class="rounded border img-fluid"/>
+        }
+    </div>
+</div>
+@section Scripts
+{
+    
+    <partial name="_ValidationScriptsPartial" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.tiny.cloud/1/4q9i02q2p7k0brzovcxc1zowp9tuc3cq4qx9lodoy9q0lzz8/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+
+    <script>
+        tinymce.init({
+            selector: "textarea",         
+            plugins: "lists",             
+            menubar: "file edit format"   
+        });
+
+        var productID=@(Model.Product.id!=0? Model.Product.id:0);
+        function ValData(){
+            if(productID==0 && document.getElementById("imageId").value===""){
+                Swal.fire("Error","Please select Image","error");
+                return false;
+            }
+            return true;
+        }
+    </script>
+
+}
+

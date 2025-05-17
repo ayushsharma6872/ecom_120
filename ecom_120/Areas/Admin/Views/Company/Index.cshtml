@@ -1,0 +1,38 @@
+﻿@model IEnumerable<ecom_120.Models.Company>
+
+@{
+    ViewData["Title"] = "Company Management";
+}
+
+<div class="row mb-3">
+    <div class="col-md-9">
+        <h2 class="text-primary">Company List</h2>
+    </div>
+    <div class="col-md-3 text-end">
+        <a asp-action="Upsert" class="btn btn-success w-100">
+            <i class="fas fa-plus"></i> Add New Company
+        </a>
+    </div>
+</div>
+
+<div class="container rounded border p-3">
+    <table id="tbldata6" class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Street Address</th>
+                <th>City</th>
+                <th>State</th>
+                <th>Postal Code</th>
+                <th>Phone Number</th>
+                <th>Is Authorized</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+    </table>
+</div>
+@section Scripts
+{
+    <script src="~/js/Company.js"></script>
+}

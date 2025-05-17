@@ -1,0 +1,53 @@
+﻿@model ecom_120.Models.ShoppingCart
+
+<div class="container py-5">
+    <div class="row g-4 align-items-start">
+        <div class="col-md-6">
+            <div class="border rounded shadow-sm p-2 bg-white">
+                <img src="@Model.Product.ImageUrl" alt="@Model.Product.Title" class="img-fluid rounded w-100" style="object-fit: cover; max-height: 450px;" />
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="bg-white p-4 rounded shadow-sm">
+                <h2 class="fw-bold text-dark">@Model.Product.Title</h2>
+                <p class="text-primary mb-3">by <strong>@Model.Product.Author</strong></p>
+                <p class="mb-2"><strong>ISBN:</strong> <span class="text-muted">@Model.Product.ISBN</span></p>
+                <hr />
+                <p class="mb-2">
+                    <strong>List Price:</strong>
+                    <span class="text-muted text-decoration-line-through">$@Model.Product.ListPrice.ToString("0.00")</span>
+                </p>
+                <p class="text-success fw-semibold mb-2"><strong>Price (100+ units):</strong> $@Model.Product.Price100.ToString("0.00")</p>
+                <p class="text-success mb-2"><strong>Price (50+ units):</strong> $@Model.Product.Price50.ToString("0.00")</p>
+                <p class="text-success mb-4"><strong>Price (1–49 units):</strong> $@Model.Product.Price.ToString("0.00")</p>
+
+                <form method="post" class="mb-3">
+                    <input type="hidden" asp-for="ProductId" />
+                    <div class="mb-3 d-flex align-items-center gap-2">
+                        <label asp-for="Count" class="form-label m-0"><strong>Quantity:</strong></label>
+                        <input asp-for="Count" type="number" min="1" class="form-control w-25" />
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-success w-50">Add to Cart</button>
+                        <a asp-action="Index" class="btn btn-outline-primary w-50">Back to List</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .btn {
+        transition: all 0.2s ease-in-out;
+    }
+
+        .btn:hover {
+            transform: scale(1.03);
+        }
+
+    .shadow-sm:hover {
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1) !important;
+    }
+</style>
